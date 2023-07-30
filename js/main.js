@@ -1,25 +1,39 @@
-function createArrayFotos() {
-    const fotos = new Array(25).fill(null).map((el, index) => createObjFoto(index));
-    return fotos;
-
+const avatarNamberOfURL = {
+    min: 1,
+    max: 6
 }
+const rangeOfLikes = {
+    min: 15,
+    max: 200
+}
+const maxNumberComents = 20;
+
+function randomNumberRange(min, max) {
+    return Math.floor(Math.random() * (max - min +1) + min)
+}
+function randomNumber(max) {
+    return Math.floor(Math.random() * max)
+}
+
+
 function createObjFoto(index) {
     const foto = {
         id: index + 1,
         url: `photos/${index + 1}`,
         decription: createDescription(),
-        likes: randomNumberRange(15, 201), 
+        likes: randomNumberRange(rangeOfLikes.min, rangeOfLikes.max), 
         comments: createComents()
     }
+    // id must start with 1
     return foto;
 }
 
 function createComents() {
-    const listOfComents = new Array(randomNumber(51)).fill(null).map((el, index) => createComent(index))
+    const listOfComents = new Array(randomNumber(maxNumberComents)).fill(null).map((el, index) => createComent(index))
     function createComent(index) {
         const coment = {
             id: index + 1,
-            avatar: `img/avatar-${randomNumberRange(1, 7)}.svg`,
+            avatar: `img/avatar-${randomNumberRange(avatarNamberOfURL.min, avatarNamberOfURL.max)}.svg`,
             message: createMessage(),
             name: createName()
         } 
@@ -48,12 +62,12 @@ function createName() {
     return person
 }
 
+function createArrayFotos() {
+    const fotos = new Array(25).fill(null).map((el, index) => createObjFoto(index));
+    return fotos;
+}
 
-function randomNumberRange(min, max) {
-    return Math.floor(Math.random() * (max - min) + min)
-}
-function randomNumber(max) {
-    return Math.floor(Math.random() * max)
-}
+
 const fotos = createArrayFotos();
 console.log(fotos)
+export {fotos}
