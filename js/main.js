@@ -19,7 +19,7 @@ function randomNumber(max) {
 function createObjFoto(index) {
     const foto = {
         id: index + 1,
-        url: `photos/${index + 1}`,
+        url: `/photos/${index + 1}.jpg`,
         decription: createDescription(),
         likes: randomNumberRange(rangeOfLikes.min, rangeOfLikes.max), 
         comments: createComents()
@@ -69,5 +69,5 @@ function createArrayFotos() {
 
 
 const fotos = createArrayFotos();
-console.log(fotos)
+// console.log(fotos)
 export {fotos}
