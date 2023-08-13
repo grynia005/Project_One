@@ -12,6 +12,7 @@ const listOfComents = sectionBigPicture.querySelector('.social__comments')
 const fragmentListComment = document.createDocumentFragment()
 const buttonCancel = sectionBigPicture.querySelector('.big-picture__cancel')
 const body = document.querySelector('body')
+export {body}
 
 
 sectionPictures.addEventListener('click', (evt) => {
@@ -21,28 +22,22 @@ sectionPictures.addEventListener('click', (evt) => {
         liComent[i].remove()
     }
     body.classList.add('modal-open')
-    sectionBigPicture.classList.remove('hidden')
     const linkClick =  targetElement.closest('[data-id]')
-    if (linkClick) {
-        const dataId = Number(linkClick.getAttribute('data-id'));
-        console.log('Клікнуто на дочірній елемент для ссилки з data-id:', dataId);
-        const photo = fotos.find((photo) => photo.id === dataId);
-        if(photo) { 
-            const arrComents = JSON.parse(JSON.stringify(photo.comments));
-            console.log(arrComents, 'test')
-            console.log('Знайдено ');
-            createListComents(checkingTheNumberOfComments(arrComents), fragmentListComment, createLiComent)
-            createFullSizePhoto(photo)
-            addFragmentToTheContainer(listOfComents, fragmentListComment)  
-    }else {
-        console.log('Фото з id', dataId, 'не знайдено. Значення dataId:', dataId);
-        console.log('Всі id з fotos:', fotos.map(photo => photo.id));
-    }}
-})
+    const dataId = Number(linkClick.getAttribute('data-id'))
+    const photo = fotos.find((photo) => photo.id === dataId)
+    if(photo) { 
+        sectionBigPicture.classList.remove('hidden')
+        const arrComents = JSON.parse(JSON.stringify(photo.comments));
+        createListComents(arrComents, fragmentListComment, createLiComent)        
+        createFullSizePhoto(photo)
+        addFragmentToTheContainer(listOfComents, fragmentListComment);
+    }
+});
+
 
 function createFullSizePhoto(photo) {
     bigIMG.querySelector('img').src = photo.url
-    console.log(photo.url)
+    // console.log(photo.url)
     bigIMG.querySelector('img').setAttribute('alt', photo.decription)
     socialHeader.querySelector('img').src = photo.url // тут може бути Ваша фотографія))
     socialHeader.querySelector('.social__caption').textContent = photo.decription
@@ -58,38 +53,37 @@ function createLiComent(el) {
 
 }
 function createListComents(array, fragment, callback) {
-    array.forEach((el) => fragment.appendChild(callback(el)));
+    const coments = checkingTheNumberOfComments(array)
+    coments.forEach((el) => fragment.appendChild(callback(el)));
 }
 function checkingTheNumberOfComments(array) {
     const numberOfOutputComments = 5;
-    if(array.length > numberOfOutputComments ) {
-        array.splice(numberOfOutputComments, array.length - 5)
-    }
-    return array
-}
-// console.log(checkingTheNumberOfComments(fotos))
+    array.splice(numberOfOutputComments, array.length - 5)
+    return array 
+};
 
 function closeFullscreenPhoto() {
     if(!sectionBigPicture.classList.contains('hidden')) {
         sectionBigPicture.classList.add('hidden')
         body.classList.remove('modal-open')
     } 
-}
-function pressKeyCancel(event) {
-    if(!sectionBigPicture.classList.contains('hidden') && event.keyCode === 27) {
-        sectionBigPicture.classList.add('hidden')
-        body.classList.remove('modal-open')
-    }
-}
+};
 
 buttonCancel.addEventListener('click', closeFullscreenPhoto)
-document.addEventListener('keydown', pressKeyCancel)
+document.addEventListener('keydown', (evt) => {
+    console.log(evt.key)
+    if(evt.key === 'Escape') {
+        closeFullscreenPhoto()
+    }
+});
 
 // Цікавинка))
 // document.addEventListener('click', (evt) => {
 //     const containerBigPictures = document.querySelector('.big-picture__preview');
-//         console.log(containerBigPictures.classList)
-//     if (!sectionBigPicture.classList.contains('hidden') && !containerBigPictures.contains(evt.target)) {
+//     // console.log(containerBigPictures.classList)
+//     console.log(evt.target.classList)
+
+//     if (!containerBigPictures.contains(evt.target) && sectionBigPicture.classList.contains('hidden')) {
     
 //         sectionBigPicture.classList.add('hidden');
 
