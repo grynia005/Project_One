@@ -51,31 +51,24 @@ function arrayСheck(array, input) {
         if(element !== '' && element[0] !== '#') {
             input.setCustomValidity('Тег має починатися з грат "#');
             isValid = false;
-            return;
         } else if(element !== '' && element.length < 2) {
             input.setCustomValidity('Тег не може складатися лише з грат "#');
             isValid = false;
-            return;
         } else if(element.length > maxlengthHashtags) {
             input.setCustomValidity('Тег не може складатися з більш ніж 20 символів включаючи грати "#');
             isValid = false;
-            return;
         } else if( element !== '' && !alphanumericPattern.test(element.substring(1))) {
             input.setCustomValidity('Тег має складатися з літер і чисел і не може містити прогалини, спецсимволи (#, @, $ і т. п.), символи пунктуації (тире, дефіс, кома тощо), емодзі і т.д. ;')
             isValid = false;
-            return;
         } 
     });
 
     if(!checkForDuplicates(array)) {
         input.setCustomValidity('Теги мають бути унікальними в незалежності від регістра');
         isValid = false;
-        console.log(array.length)
-        return;
     } else if(array.length > maxNumberHashtags) {
         input.setCustomValidity(`Максимальна кількість тегів не може складати більше ${maxNumberHashtags}`);
         isValid = false;
-        return;
     } 
 
     input.reportValidity();
@@ -115,10 +108,5 @@ closestButton.addEventListener('click', closestForm)
 
 
 document.addEventListener('keydown', (evt) => {
-    console.log(evt.key);
-    if (evt.key === 'Escape') {
-        if (document.activeElement === inputHashtags || document.activeElement === textareaComment) {
-            return
-        } else closestForm()
-    }
+    if (evt.key === 'Escape' && !(document.activeElement === inputHashtags || document.activeElement === textareaComment)) closestForm()          
 });
