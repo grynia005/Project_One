@@ -68,6 +68,25 @@ main {
  * Кнопка закриття модального вікна
  */
 
+
+.error_section {
+  position: absolute;
+  top: -66px;
+  left: 50%;
+  transform: translate(-50%, 50%);
+} 
+
+.wrepper_eror {
+  margin: 0, auto;
+  padding-top: 1px;
+  width: 500px;
+  height: 80px;
+  background-color: #aacee7;
+  color: rgb(15, 15, 0);
+  text-align: center;
+  font-size: xx-large;
+}
+
 .cancel {
   display: block;
   margin: 0;
