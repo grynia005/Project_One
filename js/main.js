@@ -1,73 +1,42 @@
-const avatarNamberOfURL = {
-    min: 1,
-    max: 6
-}
-const rangeOfLikes = {
-    min: 15,
-    max: 200
-}
-const maxNumberComents = 20;
+import { addFragmentToTheContainer } from "./pictures.js";
+import { getAllPhoto } from "./pictures.js";
+import { sectionPictures } from "./pictures.js";
+import { allPhotoFragment } from "./pictures.js";
 
-function randomNumberRange(min, max) {
-    return Math.floor(Math.random() * (max - min +1) + min)
-}
-function randomNumber(max) {
-    return Math.floor(Math.random() * max)
-}
+const errorInfo = document.querySelector(".error_section");
 
+const urLserv = "http://localhost:3000/photos";
 
-function createObjFoto(index) {
-    const foto = {
-        id: index + 1,
-        url: `/photos/${index + 1}.jpg`,
-        decription: createDescription(),
-        likes: randomNumberRange(rangeOfLikes.min, rangeOfLikes.max), 
-        comments: createComents()
-    }
-    // id must start with 1
-    return foto;
-}
-
-function createComents() {
-    const listOfComents = new Array(randomNumber(maxNumberComents)).fill(null).map((el, index) => createComent(index))
-    function createComent(index) {
-        const coment = {
-            id: index + 1,
-            avatar: `img/avatar-${randomNumberRange(avatarNamberOfURL.min, avatarNamberOfURL.max)}.svg`,
-            message: createMessage(),
-            name: createName()
-        } 
-        return coment
+async function getPhotosFromServer() {
+  try {
+    const response = await fetch("http://localhost:3000/photos");
+    if (!response.ok) {
+      throw new Error("З сервером щось не ОК!");
     }
 
-    return listOfComents;
+    const arrayPhotos = await response.json();
+    console.log(Array.isArray(arrayPhotos));
+    return arrayPhotos;
+  } catch (error) {
+    errorInfo.classList.remove("hidden");
+    console.error("Сталася страшна помилка", error);
+  }
 }
-function createDescription() {
-    const desccriptionOptions = ['Природа у всій своїй красі', 'Запашна кава розбуджує уранці перед робочим днем', 'Сніданок на швидку руку', 'Час на вечерю після роботи', 'Солодкий перерву з тортиком ', 'Захоплююча гра у футбол', 'Ранкові вправи для зарядки енергії ', 'Вечірній промені сонця', 'Зимова прогулянка з кавою в руках', 'Зустріч з дикою природою', 'Незабутні моменти з друзями', 'Ритм серця під музикою дощу', 'Вулиці міста оживають увечері,', 'Морський бриз', 'Записки в щоденнику ']
-    const desccription = desccriptionOptions[randomNumber(desccriptionOptions.length)]
-    return desccription
-}
-function createMessage() {
-    const messageOptions = ['Чудова фотографія!', 'Прекрасний кадр!', 'Просто неймовірно!', 'Прекрасний кадр!', 'Трохи мутно...', 'Це можна було б зробити краще.', 'Фотографія дня!', 'Я б не ділився такими фото, якби був на вашому місці.', 'Це ви намагались зняти, чи просто натиснули випадково?', 'Можливо, це не найкращий ракурс.']
-    const message = messageOptions[randomNumber(messageOptions.length)]
-    return message
-}
+const photos = getPhotosFromServer();
+console.log(photos);
 
-function createName() {
-    const listName = ['Андрій', 'Олена', 'Максим', 'Юлія', 'Денис', 'Ірина', 'Сергій', 'Анастасія', 'Віктор', 'Наталія']
-    const listSurname = ['Ковальчук', 'Шевченко', 'Петренко', 'Григоренко', 'Коваль', 'Мельник', 'Лисенко', 'Сидоренко', 'Левченко', 'Романенко']
-    const name = listName[randomNumber(listName.length)]
-    const Surname = listSurname[randomNumber(listSurname.length)]
-    const person = `${name} ${Surname}`
-    return person
-}
+photos
+  .then(function (data) {
+    getAllPhoto(data);
+  })
+  .then(function (data) {
+    addFragmentToTheContainer(sectionPictures, allPhotoFragment);
+  })
+  .catch((error) => {
+    console.error(
+      "Сталася страшна помилка під час отримання фотографій",
+      error
+    );
+  });
 
-function createArrayFotos() {
-    const fotos = new Array(25).fill(null).map((el, index) => createObjFoto(index));
-    return fotos;
-}
-
-
-const fotos = createArrayFotos();
-// console.log(fotos)
-export {fotos}
+export { photos };

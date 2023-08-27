@@ -1,5 +1,3 @@
-import { fotos } from './main.js'
-import { addFragmentToTheContainer } from './pictures.js'
 import { body } from './fullScren.js'
 
 
