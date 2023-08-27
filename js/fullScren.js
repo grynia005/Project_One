@@ -107,6 +107,8 @@ sectionPictures.addEventListener("click", async (evt) => {
       createFullSizePhoto(photo);
       addFragmentToTheContainer(listOfComents, fragmentListComment);
       buttonLoadMore.addEventListener("click", loadComments);
+      hideAddCommentsButton()
+
     }
   } catch (error) {
     console.error(error);
