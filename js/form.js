@@ -1,4 +1,8 @@
 import { body } from './fullScren.js'
+// import { testImage } from './іmageEditing.js';
+import { closeSlider } from './slider.js';
+import { slider } from './slider.js';
+import { originalImage } from './slider.js';
 
 
 const alphanumericPattern = /^[a-zA-Z0-9]+$/;
@@ -94,17 +98,20 @@ function validationOfComent() {
     return isValid;
 }
 
-function closestForm() {
+function closeForm() {
     if(!imageEditingForm.classList.contains('hidden')) {
         imageEditingForm.classList.add('hidden')
         body.classList.remove('modal-open')
         inputUpload.value = ''
     }
+    closeSlider(slider)
+    originalImage()
+
 }
 
-closestButton.addEventListener('click', closestForm)
+closestButton.addEventListener('click', closeForm)
 
 
 document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape' && !(document.activeElement === inputHashtags || document.activeElement === textareaComment)) closestForm()          
+    if (evt.key === 'Escape' && !(document.activeElement === inputHashtags || document.activeElement === textareaComment)) closeForm()          
 });

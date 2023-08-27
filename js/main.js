@@ -23,7 +23,6 @@ async function getPhotosFromServer() {
   }
 }
 const photos = getPhotosFromServer();
-console.log(photos);
 
 photos
   .then(function (data) {
