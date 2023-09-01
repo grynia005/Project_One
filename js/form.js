@@ -1,5 +1,16 @@
-import { body } from './fullScren.js'
-
+import { urlServ } from "./main.js";
+import {
+  body,
+  showFullScreen,
+} from "./fullScren.js";
+import { testImage } from "./іmageEditing.js";
+import { closeSlider } from "./slider.js";
+import { originalImage } from "./slider.js";
+import { addFragmentToTheContainer } from "./pictures.js";
+import { getAllPhoto } from "./pictures.js";
+import { sectionPictures } from "./pictures.js";
+import { allPhotoFragment } from "./pictures.js";
+import { photos } from "./main.js";
 
 const alphanumericPattern = /^[a-zA-Z0-9]+$/;
 
@@ -183,16 +194,25 @@ function validationOfComent() {
 }
 
 function closestForm() {
-    if(!imageEditingForm.classList.contains('hidden')) {
-        imageEditingForm.classList.add('hidden')
-        body.classList.remove('modal-open')
-        inputUpload.value = ''
-    }
+  if (!imageEditingForm.classList.contains("hidden")) {
+    imageEditingForm.classList.add("hidden");
+    body.classList.remove("modal-open");
+    inputUpload.value = "";
+    imageForm.reset();
+  }
+  closeSlider(slider);
+  originalImage();
 }
 
-closestButton.addEventListener('click', closestForm)
+closestButton.addEventListener("click", closestForm);
 
-
-document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape' && !(document.activeElement === inputHashtags || document.activeElement === textareaComment)) closestForm()          
+document.addEventListener("keydown", (evt) => {
+  if (
+    evt.key === "Escape" &&
+    !(
+      document.activeElement === inputHashtags ||
+      document.activeElement === textareaComment
+    )
+  )
+    closestForm();
 });
