@@ -44,7 +44,7 @@ function loadComments() {
   displayedNumberComments.textContent = displayedComents.length;
   createListComents(displayedComents, fragmentListComment, createLiComent);
   addFragmentToTheContainer(listOfComents, fragmentListComment);
-  hideAddCommentsButton()
+  hideAddCommentsButton();
 }
 
 function addComent(numb) {
@@ -53,6 +53,8 @@ function addComent(numb) {
 
 function createFullSizePhoto(photo) {
   bigIMG.querySelector("img").src = photo.url;
+  bigIMG.querySelector("img").style.filter = `${photo.metadata.filter}`;
+  bigIMG.querySelector("img").style.transform = `${photo.metadata.transform}`;
   bigIMG.querySelector("img").setAttribute("alt", photo.decription);
   socialHeader.querySelector("img").src = photo.url; // тут може бути Ваша фотографія))
   socialHeader.querySelector(".social__caption").textContent = photo.decription;
@@ -87,10 +89,9 @@ function closeFullscreenPhoto() {
     body.classList.remove("modal-open");
   }
 }
-
-sectionPictures.addEventListener("click", async (evt) => {
+async function showFullScreen(evt, data) {
   try {
-    const array = await photos;
+    const array = await data;
     const targetElement = evt.target;
     body.classList.add("modal-open");
     const linkClick = targetElement.closest("[data-id]");
@@ -113,7 +114,11 @@ sectionPictures.addEventListener("click", async (evt) => {
   } catch (error) {
     console.error(error);
   }
-});
+}
+
+sectionPictures.addEventListener("click", (evt) => {
+  showFullScreen(evt, photos)
+})
 
 buttonCancel.addEventListener("click", closeFullscreenPhoto);
 
@@ -123,4 +128,4 @@ document.addEventListener("keydown", (evt) => {
   }
 });
 
-export { body };
+export { body, showFullScreen };

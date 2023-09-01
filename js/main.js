@@ -5,7 +5,7 @@ import { allPhotoFragment } from "./pictures.js";
 
 const errorInfo = document.querySelector(".error_section");
 
-const urLserv = "http://localhost:3000/photos";
+const urlServ = "http://localhost:3000/photos";
 
 async function getPhotosFromServer() {
   try {
@@ -38,4 +38,5 @@ photos
     );
   });
 
-export { photos };
+export { photos, urlServ };
+

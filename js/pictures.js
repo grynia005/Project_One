@@ -4,7 +4,10 @@ const allPhotoFragment = document.createDocumentFragment();
 
 function getOnePhoto(el) {
   const copyTemplate = photoTemplate.content.cloneNode(true);
-  copyTemplate.querySelector(".picture__img").src = el.url;
+  const image = copyTemplate.querySelector(".picture__img");
+  image.src = el.url;
+  image.style.filter = `${el.metadata.filter}`
+  image.style.transform = `${el.metadata.transform}`
   copyTemplate.querySelector(".picture__comments").textContent =
     el.comments.length;
   copyTemplate.querySelector(".picture__likes").textContent = el.likes;
@@ -15,7 +18,15 @@ function getAllPhoto(array) {
   array.forEach((el) => allPhotoFragment.appendChild(getOnePhoto(el)));
 }
 
+function clearImageSection(container, className) {
+  const elementsToRemove = container.querySelectorAll(`.${className}`);
+  elementsToRemove.forEach((element) => {
+    element.remove();
+  });
+}
+
 function addFragmentToTheContainer(container, fragment) {
+  clearImageSection(container, 'picture')
   container.appendChild(fragment);
 }
 
