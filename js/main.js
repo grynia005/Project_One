@@ -5,11 +5,11 @@ import { allPhotoFragment } from "./pictures.js";
 
 const errorInfo = document.querySelector(".error_section");
 
-const urLserv = "http://localhost:3000/photos";
+const urlServ = "http://localhost:3000/photos/";
 
 async function getPhotosFromServer() {
   try {
-    const response = await fetch("http://localhost:3000/photos");
+    const response = await fetch(urlServ);
     if (!response.ok) {
       throw new Error("З сервером щось не ОК!");
     }
@@ -38,4 +38,5 @@ photos
     );
   });
 
-export { photos };
+export { photos, urlServ };
+
