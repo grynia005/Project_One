@@ -1,11 +1,12 @@
-import { addFragmentToTheContainer } from "./pictures.js";
-import { getAllPhoto } from "./pictures.js";
-import { sectionPictures } from "./pictures.js";
-import { allPhotoFragment } from "./pictures.js";
+import { addFragmentToTheContainer, getAllPhoto, sectionPictures, allPhotoFragment } from "./pictures.js";
+import { showFilter, allFilter, filterDiv} from "./filter.js";
+
+
 
 const errorInfo = document.querySelector(".error_section");
-
 const urlServ = "http://localhost:3000/photos/";
+
+
 
 async function getPhotosFromServer() {
   try {
@@ -27,9 +28,11 @@ const photos = getPhotosFromServer();
 photos
   .then(function (data) {
     getAllPhoto(data);
-  })
-  .then(function (data) {
     addFragmentToTheContainer(sectionPictures, allPhotoFragment);
+    showFilter()
+    filterDiv.addEventListener('click', (evt) => {
+      allFilter(evt, data)
+    })
   })
   .catch((error) => {
     console.error(
