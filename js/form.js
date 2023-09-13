@@ -1,5 +1,5 @@
 import { urlServ } from "./main.js";
-import { body, buttonCancel, showFullScreen, closeFullscreenPhoto } from "./fullScren.js";
+import { body, showFullScreen, } from "./fullScren.js";
 import { testImage } from "./іmageEditing.js";
 import { closeSlider, originalImage } from "./slider.js";
 import {
@@ -70,7 +70,6 @@ document
           sectionPictures.addEventListener("click", (evt) => {
             showFullScreen(evt, responseData);
           });
-          buttonCancel.addEventListener("click", closeFullscreenPhoto);
         }
       } catch (error) {
         showPop("error");

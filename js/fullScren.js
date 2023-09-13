@@ -128,4 +128,4 @@ document.addEventListener("keydown", (evt) => {
   }
 });
 
-export { body, buttonCancel, showFullScreen, closeFullscreenPhoto };
+export { body, showFullScreen };
