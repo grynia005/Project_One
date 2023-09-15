@@ -1,5 +1,5 @@
 import { urlServ } from "./main.js";
-import { body, showFullScreen, } from "./fullScren.js";
+import { body, showFullScreen, clearCommentList } from "./fullScren.js";
 import { testImage } from "./іmageEditing.js";
 import { closeSlider, originalImage } from "./slider.js";
 import {
@@ -8,7 +8,7 @@ import {
   getAllPhoto,
   addFragmentToTheContainer,
 } from "./pictures.js";
-import { showFilter, allFilter, filterDiv } from "./filter.js";
+import { showFilter, allFilterPhoto, filterDiv } from "./filter.js";
 
 const alphanumericPattern = /^[a-zA-Z0-9]+$/;
 const imageEditingForm = document.querySelector(".img-upload__overlay");
@@ -61,11 +61,12 @@ document
           const responseData = await response.json();
           closestForm();
           await getAllPhoto(responseData);
+          clearCommentList();
           addFragmentToTheContainer(sectionPictures, allPhotoFragment);
           showPop("success");
           filterDiv.addEventListener("click", (evt) => {
             console.log(responseData);
-            allFilter(evt, responseData);
+            allFilterPhoto(evt, responseData);
           });
           sectionPictures.addEventListener("click", (evt) => {
             showFullScreen(evt, responseData);

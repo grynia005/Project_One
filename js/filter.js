@@ -9,7 +9,7 @@ const filterDiv = document.querySelector(".img-filters");
 const formFilter = document.querySelector(".img-filters__form");
 const activeFilterClass = "img-filters__button--active";
 const maxRandomPhoto = 12;
-const waitingTime = 300
+const waitingTime = 300;
 
 function debounce(func, ms) {
   let timeout;
@@ -22,14 +22,13 @@ function debounce(func, ms) {
     timeout = setTimeout(fnCall, ms);
   };
 }
-allFilter = debounce(allFilter, waitingTime);
+const allFilterPhoto = debounce(allFilter, waitingTime);
 
 function showFilter() {
   filterDiv.classList.remove("img-filters--inactive");
 }
 
 function activeFilter(btn) {
-  console.log(btn.classList);
   const activeBtn = formFilter.querySelectorAll("button");
   activeBtn.forEach((el) => {
     el.classList.remove(activeFilterClass);
@@ -51,34 +50,30 @@ function randomPhoto(array, numb) {
 
 function filterReduceNumberComments(array) {
   const copyArray = JSON.parse(JSON.stringify(array));
-  copyArray.sort(function (b, a) {
-    return a.comments.length - b.comments.length;
+  copyArray.sort(function (a, b) {
+    return b.comments.length - a.comments.length;
   });
   return copyArray;
 }
 
 function allFilter(evt, arrayPhotos) {
   const targetElement = evt.target;
+  let photos;
   switch (targetElement.id) {
     case "filter-default":
-      console.log(targetElement.id);
-      getAllPhoto(arrayPhotos);
-      activeFilter(targetElement);
-      addFragmentToTheContainer(sectionPictures, allPhotoFragment);
+      photos = arrayPhotos;
       break;
     case "filter-random":
-      getAllPhoto(randomPhoto(arrayPhotos, maxRandomPhoto));
-      activeFilter(targetElement);
-      addFragmentToTheContainer(sectionPictures, allPhotoFragment);
+      photos = randomPhoto(arrayPhotos, maxRandomPhoto);
       break;
     case "filter-discussed":
-      getAllPhoto(filterReduceNumberComments(arrayPhotos));
-      activeFilter(targetElement);
-      addFragmentToTheContainer(sectionPictures, allPhotoFragment);
+      photos = filterReduceNumberComments(arrayPhotos);
       break;
     default:
-      break;
   }
+  getAllPhoto(photos);
+  activeFilter(targetElement);
+  addFragmentToTheContainer(sectionPictures, allPhotoFragment);
 }
 
-export { showFilter, allFilter, filterDiv };
+export { showFilter, allFilterPhoto, filterDiv };
