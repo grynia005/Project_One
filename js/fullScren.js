@@ -106,6 +106,7 @@ async function showFullScreen(evt, data) {
       displayedNumberComments.textContent = displayedComents.length;
       createListComents(displayedComents, fragmentListComment, createLiComent);
       createFullSizePhoto(photo);
+      clearCommentList()
       addFragmentToTheContainer(listOfComents, fragmentListComment);
       buttonLoadMore.addEventListener("click", loadComments);
       hideAddCommentsButton()
@@ -128,4 +129,4 @@ document.addEventListener("keydown", (evt) => {
   }
 });
 
-export { body, showFullScreen };
+export { body, showFullScreen, clearCommentList };

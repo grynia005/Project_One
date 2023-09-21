@@ -1,19 +1,16 @@
 import { urlServ } from "./main.js";
-import {
-  body,
-  showFullScreen,
-} from "./fullScren.js";
+import { body, showFullScreen, clearCommentList } from "./fullScren.js";
 import { testImage } from "./іmageEditing.js";
-import { closeSlider } from "./slider.js";
-import { originalImage } from "./slider.js";
-import { addFragmentToTheContainer } from "./pictures.js";
-import { getAllPhoto } from "./pictures.js";
-import { sectionPictures } from "./pictures.js";
-import { allPhotoFragment } from "./pictures.js";
-import { photos } from "./main.js";
+import { closeSlider, originalImage } from "./slider.js";
+import {
+  sectionPictures,
+  allPhotoFragment,
+  getAllPhoto,
+  addFragmentToTheContainer,
+} from "./pictures.js";
+import { showFilter, allFilterPhoto, filterDiv } from "./filter.js";
 
 const alphanumericPattern = /^[a-zA-Z0-9]+$/;
-
 const imageEditingForm = document.querySelector(".img-upload__overlay");
 const imageForm = document.querySelector(".img-upload__form");
 const inputUpload = document.querySelector("#upload-file");
@@ -64,11 +61,16 @@ document
           const responseData = await response.json();
           closestForm();
           await getAllPhoto(responseData);
+          clearCommentList();
           addFragmentToTheContainer(sectionPictures, allPhotoFragment);
           showPop("success");
+          filterDiv.addEventListener("click", (evt) => {
+            console.log(responseData);
+            allFilterPhoto(evt, responseData);
+          });
           sectionPictures.addEventListener("click", (evt) => {
-            showFullScreen(evt, responseData)
-          })
+            showFullScreen(evt, responseData);
+          });
         }
       } catch (error) {
         showPop("error");
